@@ -1,43 +1,62 @@
-import { FC, useEffect, useState, CSSProperties } from "react";
-import Graph, { UsageGraphError } from "graphology";
-import { parse } from "graphology-gexf/browser";
+import { useCallback, useEffect, useState, } from "react";
+import Graph from "graphology";
 import {
-  ControlsContainer,
-  FullScreenControl,
   SigmaContainer,
-  ZoomControl,
   useRegisterEvents,
   useLoadGraph,
   useSigma,
 } from "@react-sigma/core";
 import "@react-sigma/core/lib/react-sigma.min.css";
+import { useWorkerLayoutForce } from "@react-sigma/layout-force";
+import { Attributes } from "graphology-types";
+
 
 const sigmaStyle = { height: "100vh", width: "100%" };
 
+const graph = new Graph();
+
 // Component that load the graph
 const LoadGraph = () => {
+  // const { start, kill } = useWorkerLayoutForce({ isNodeFixed: (_: string, attr: Attributes) => { return attr.highlighted}, settings: {attraction: 1, repulsion: 0, inertia: 0, gravity: 0, maxMove: 1}});
+  const { start, kill } = useWorkerLayoutForce({ isNodeFixed: (_: string, attr: Attributes) => { return attr.highlighted}, settings: {repulsion: 0.001, attraction: 0.0001, inertia: 0.0001, gravity: 0.0001}});
   const loadGraph = useLoadGraph();
-  
-  useEffect(() => {
-    fetch("http://localhost:8080/v1/nodes/rumors")
-    .then((res) => res.json())
-    .then((data) => {
-      // Parse GEXF string:
-      const graph = new Graph();
-      graph.addNode("rumors", {label: "rumors"});
-      data.effects.forEach((node: string) => {
+
+  let loadNode = useCallback((node: string) => {
+    fetch(`http://localhost:8080/v1/nodes/${node}`)
+      .then((res) => res.json())
+      .then((data) => {
         if (!graph.hasNode(node))
-          graph.addNode(node, {label: node});
-        graph.addDirectedEdge("rumors", node);
-      });
-      graph.forEachNode((node) => {
-        graph.setNodeAttribute(node, "x", Math.random()*500);
-        graph.setNodeAttribute(node, "y", Math.random()*500);
-        graph.setNodeAttribute(node, "size", 15);
-      });
-      loadGraph(graph);
+          graph.addNode(node, {label: node, x: Math.random()*10, y: Math.random()*10, size: 5});
+
+        let i = 0;
+        for (let effect of data.effects) {
+          if (!graph.hasNode(effect))
+            graph.addNode(effect, {label: effect, x: Math.random()*10, y: Math.random()*10, size: 5});
+          if (!graph.hasDirectedEdge(node, effect))
+            graph.addDirectedEdge(node, effect);
+          if (++i > 200)
+            break;
+        }
+        loadGraph(graph);
     });
   }, [loadGraph]);
+  
+  useEffect(() => {
+    loadNode("humor");
+    loadNode("death");
+    loadNode("research");
+    loadNode("accident");
+    loadNode("hospital");
+    loadNode("injuries");
+    loadNode("costs");
+    loadNode("amputations");
+    loadNode("aids");
+    loadGraph(graph);
+    start();
+    return () => {
+      kill();
+    };
+  }, [start, loadNode, kill, loadGraph]);
 
   return null;
 };

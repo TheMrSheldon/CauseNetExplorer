@@ -1,5 +1,5 @@
 import { useEffect, useState, } from "react";
-import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Fade, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import SourceBox from "./sourcebox";
 
@@ -25,19 +25,29 @@ interface EdgeInfoProps {
 const EdgeInfo: React.FC<EdgeInfoProps> = (props: EdgeInfoProps) => {
     const [supports, setSupports] = useState<any | null>(null);
     useEffect(() => {
+        setSupports(null);
         if (props.edge != null) {
-            fetch(`http://localhost:8080/v1/nodes/${props.edge?.at(0)}/effects/${props.edge?.at(1)}`)
+            fetch(`http://localhost:8432/v1/nodes/${props.edge?.at(0)}/effects/${props.edge?.at(1)}`)
                 .then((res) => res.json())
                 .then(setSupports);
         }
     }, [props, setSupports]);
+
+    const SourceList = React.forwardRef(() => {
+        if (props.edge == null)
+            return <></>;
+        return (<>
+            <Typography variant="h6">{props.edge?.at(0)} &rarr; {props.edge?.at(1)}</Typography>
+            {(supports == null)? <center><CircularProgress/></center> : (
+                (supports.length === 0)? <>No Sources</> : <>{supports.map((support: any) => <Fade in><div><SourceBox source={support} /></div></Fade>)}</>
+            )}
+        </>);
+    });
+
     return (
-        <Box sx={{p: 2}}>
+        <Box sx={{p: 2, height: 10}}>
             <NotSelectedIndicator show={props.edge == null}/>
-        {(supports != null)? <><Typography variant="h6">{props.edge?.at(0)} &rarr; {props.edge?.at(1)}</Typography>
-        {supports.map((support: any) => (
-            <SourceBox source={support} />
-        ))}</> : (props.edge && <>No Sources</>)}
+            <SourceList />
         </Box>
     );
 }

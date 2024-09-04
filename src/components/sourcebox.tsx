@@ -5,9 +5,14 @@ const sourceId2Name = ["Wikipedia Infobox", "Wikipedia List", "Wikipedia", "Clue
 
 
 function getSourceDesc(source: any) {
+    const sourceName = sourceId2Name[source.sourceTypeId]
     if (source.sourceTypeId === 2)
-        return <Link href={`https://en.wikipedia.org/?curid=${source.id}`} rel="noreferrer" underline="hover" target="_blank">Wikipedia</Link>
-    return <>{sourceId2Name[source.sourceTypeId]} &mdash; {source.id}</>
+        return <Link href={`https://en.wikipedia.org/?oldid=${source.id}`} rel="noreferrer" underline="hover" target="_blank">Wikipedia</Link>
+    else if (source.sourceTypeId === 3)
+        /*return <Link href={`/clueweb12/${source.id}`} rel="noreferrer" underline="hover" target="_blank">{sourceName}</Link>*/
+        return <Link href={`https://chatnoir-webcontent.web.webis.de/?index=cw12&trec-id=${source.id}`} rel="noreferrer" underline="hover" target="_blank">{sourceName} on ChatNoir</Link>
+
+    return <>{sourceName} &mdash; {source.id}</>
 }
 
 interface SourceBoxProps {

@@ -21,6 +21,7 @@ import { Fullscreen, FullscreenExit, PauseCircleOutline, PlayCircleOutline } fro
 import { LayoutForceAtlas2Control } from "@react-sigma/layout-forceatlas2";
 import { EdgeArrowProgram } from "sigma/rendering";
 import EdgeInfo from "../../components/edgeinfo";
+import conf from "../../conf"
 
 interface GraphEventsProps {
   selectedEdge: [string, string] | null,
@@ -132,7 +133,7 @@ export const DisplayGraph = () => {
   const sigmaStyle = { flexGrow: 1, height: "100vh", width: "100%", backgroundColor: theme.palette.background.paper, color: "white" };
 
   let loadNode = useCallback((node: string) => {
-    fetch(`http://localhost:8432/v1/nodes/${node}`)
+    fetch(`${conf.rest_endpoint}/v1/nodes/${node}`)
       .then((res) => res.json())
       .then((data) => {
         const x = Math.random()*10
@@ -161,7 +162,8 @@ export const DisplayGraph = () => {
         curved: EdgeCurveProgram
       }, enableEdgeEvents: true,
         defaultNodeColor: theme.palette.primary.main,
-        defaultEdgeColor: theme.palette.grey[500]
+        defaultEdgeColor: theme.palette.grey[500],
+        minEdgeThickness: 2,
       }} graph={graph}>
           <GraphEvents selectedEdge={selectedEdge} onEdgeSelectionChanged={setSelectedEdge}/>
           <ControlsContainer position={"bottom-right"}>

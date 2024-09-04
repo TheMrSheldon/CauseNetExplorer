@@ -1,6 +1,7 @@
 import { Alert, Box, Skeleton} from "@mui/material";
 import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import conf from "../../conf"
 
 export const ArchiveView: React.FC<{}> = () => {
     const [origURL, setOrigURL] = useState<string | null>(null);
@@ -8,7 +9,7 @@ export const ArchiveView: React.FC<{}> = () => {
     let pageId = useParams().pageid
 
     useEffect(() => {
-        fetch(`http://localhost:8432/v1/clueweb/${pageId}/info`)
+        fetch(`${conf.rest_endpoint}/v1/clueweb/${pageId}/info`)
             .then((res) => res.json())
             .then((json) => {
                 setOrigURL(json["WARC-Target-URI"])
@@ -24,6 +25,6 @@ export const ArchiveView: React.FC<{}> = () => {
             What you are seeing is <b>only</b> a single HTML file from the <Link to="http://lemurproject.org/clueweb12/">ClueWeb12</Link> crawl.<br/>
             Specifically, this is a snapshot of {urlText} taken on {dateText}.
         </Alert>
-        <iframe style={{flexGrow: "1"}} title="content" src={`http://localhost:8432/v1/clueweb/${pageId}/content`}></iframe>
+        <iframe style={{flexGrow: "1"}} title="content" src={`${conf.rest_endpoint}/v1/clueweb/${pageId}/content`}></iframe>
         </Box>)
 }

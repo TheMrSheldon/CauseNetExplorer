@@ -1979,7 +1979,7 @@
 
 "@remix-run/router@1.18.0":
   version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.18.0.tgz#20b033d1f542a100c1d57cfd18ecf442d1784732"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.18.0.tgz"
   integrity sha512-L3jkqmqoSVBVKHfpGZmLrex0lxR5SucGA0sUfFzGctehw+S/ggL9L/0NnC5mw6P8HUWpFZ3nQw3cRApjjWx9Sw==
 
 "@rollup/plugin-babel@^5.2.0":
@@ -2026,7 +2026,7 @@
 
 "@sigma/edge-curve@3.0.0-beta.6":
   version "3.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@sigma/edge-curve/-/edge-curve-3.0.0-beta.6.tgz#f0edf5e8bf469b8ec966c43e8cdf128b09a69ea6"
+  resolved "https://registry.npmjs.org/@sigma/edge-curve/-/edge-curve-3.0.0-beta.6.tgz"
   integrity sha512-GNUD6VrtVTqG26a56X4s4OSjWHdDnO+OrLYJ0ygu7TFXIgXuQ5S7jwsJq9oJ4FQRCdJ71/TpP5dP58CKm7axRw==
 
 "@sinclair/typebox@^0.24.1":
@@ -8429,7 +8429,7 @@ react-refresh@^0.11.0:
 
 react-router-dom@^6.25.1:
   version "6.25.1"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.25.1.tgz#b89f8d63fc8383ea4e89c44bf31c5843e1f7afa0"
+  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.25.1.tgz"
   integrity sha512-0tUDpbFvk35iv+N89dWNrJp+afLgd+y4VtorJZuOCXK0kkCWjEvb3vTJM++SYvMEpbVwXKf3FjeVveVEb6JpDQ==
   dependencies:
     "@remix-run/router" "1.18.0"
@@ -8437,7 +8437,7 @@ react-router-dom@^6.25.1:
 
 react-router@6.25.1:
   version "6.25.1"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.25.1.tgz#70b4f1af79954cfcfd23f6ddf5c883e8c904203e"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.25.1.tgz"
   integrity sha512-u8ELFr5Z6g02nUtpPAggP73Jigj1mRePSwhS/2nkTrlPU5yEkH1vYzWNyvSnSzeeE2DNqWdH+P8OhIh9wuXhTw==
   dependencies:
     "@remix-run/router" "1.18.0"

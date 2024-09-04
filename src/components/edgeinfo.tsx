@@ -2,6 +2,7 @@ import { useEffect, useState, } from "react";
 import { Box, CircularProgress, Fade, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import SourceBox from "./sourcebox";
+import conf from "../conf"
 
 interface NotSelectedIndicatorProps {
 	show: boolean
@@ -27,7 +28,7 @@ const EdgeInfo: React.FC<EdgeInfoProps> = (props: EdgeInfoProps) => {
     useEffect(() => {
         setSupports(null);
         if (props.edge != null) {
-            fetch(`http://localhost:8432/v1/nodes/${props.edge?.at(0)}/effects/${props.edge?.at(1)}`)
+            fetch(`${conf.rest_endpoint}/v1/nodes/${props.edge?.at(0)}/effects/${props.edge?.at(1)}`)
                 .then((res) => res.json())
                 .then(setSupports);
         }

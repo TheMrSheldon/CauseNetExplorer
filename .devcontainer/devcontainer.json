@@ -12,11 +12,15 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install --legacy-peer-deps"
+	"postCreateCommand": "npm install --legacy-peer-deps",
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
+
+	"remoteEnv": {
+		"REACT_APP_REST_BASE_URL": "http://localhost:8432"
+	}
 }
